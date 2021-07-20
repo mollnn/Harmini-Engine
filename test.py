@@ -27,16 +27,21 @@ def generatorNaive(harmony_proceed, num_note_in_chord):
         for i in range(num_note_in_chord):
             while True:
                 note = getRandomNoteInChord(chord_name)
-                ran = random.random()
+                if random.randint(0, 2) == 0:
+                    note -= 12
                 if len(ans) > 0:
+                    ran = random.random()
                     if abs(note-ans[-1]) == 0 and ran > 0.001:
                         continue
-                    if math.exp(-abs(note-ans[-1])) < ran:
+                    ran = random.random()
+                    if math.pow(2, -abs(note-ans[-1])) < ran:
                         continue
                 if len(ans) > 1:
-                    if abs(note-ans[-2]) == 0 and ran > 0.002:
+                    ran = random.random()
+                    if abs(note-ans[-2]) == 0 and ran > 0.01:
                         continue
-                    if math.exp(-abs(note-ans[-2])) < 0.8*ran:
+                    ran = random.random()
+                    if math.pow(1.2, -abs(note-ans[-2])) < 0.8*ran:
                         continue
                 ans.append(note)
                 break
@@ -51,7 +56,7 @@ def playNoteSeries(note_series, bpm=120):
 
 if __name__ == "__main__":
     audio_engine.init()
-    harmony_proceed = ['C4M', 'G4M', 'A5m',
-                       'E4m', 'F4M', 'C4M', 'F4M', 'G4M', 'C4M']
+    harmony_proceed = ['C4M', 'G4M', 'A5m', 'E4m', 'F4M', 'C4M', 'F4M',
+                       'G4M', 'F4M', 'G4M', 'E4m', 'A5m', 'D4m', 'G4M', 'C4M', 'C4M']
     note_series = generatorNaive(harmony_proceed, 4)
-    playNoteSeries(note_series, 120)
+    playNoteSeries(note_series, 180)
