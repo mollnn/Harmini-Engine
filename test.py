@@ -49,14 +49,18 @@ def generatorNaive(harmony_proceed, num_note_in_chord):
 
 
 def playNoteSeries(note_series, bpm=120):
-    audio_engine.init()
+    print("start")
+    tim = 0
     for i in note_series:
-        audio_engine.play(i, 60/bpm)
+        audio_engine.put_sequence_to_buffer(
+            "instrument/piano_gcd/%03d.wav" % i, tim*44100)
+        tim += 60/bpm
+        print("time=", tim)
+    audio_engine.play_buffer()
 
 
 if __name__ == "__main__":
-    audio_engine.init()
     harmony_proceed = ['C4M', 'G4M', 'A5m', 'E4m', 'F4M', 'C4M', 'F4M',
                        'G4M', 'F4M', 'G4M', 'E4m', 'A5m', 'D4m', 'G4M', 'C4M', 'C4M']
     note_series = generatorNaive(harmony_proceed, 4)
-    playNoteSeries(note_series, 180)
+    playNoteSeries(note_series, 240)
