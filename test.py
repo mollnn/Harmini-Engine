@@ -2,6 +2,7 @@ import audio_engine
 import pitch
 import chord
 import random
+import math
 
 
 def getNote(pitch_name):
@@ -21,13 +22,24 @@ def getRandomNoteInChord(chord_name):
 
 
 def generatorNaive(harmony_proceed, num_note_in_chord):
-    harmony_proceed = ['C4M', 'G4M', 'A5m',
-                       'E4m', 'F4M', 'C4M', 'F4M', 'G4M', 'C4M']
     ans = []
     for chord_name in harmony_proceed:
         for i in range(num_note_in_chord):
-            note = getRandomNoteInChord(chord_name)
-            ans.append(note)
+            while True:
+                note = getRandomNoteInChord(chord_name)
+                ran = random.random()
+                if len(ans) > 0:
+                    if abs(note-ans[-1]) == 0 and ran > 0.001:
+                        continue
+                    if math.exp(-abs(note-ans[-1])) < ran:
+                        continue
+                if len(ans) > 1:
+                    if abs(note-ans[-2]) == 0 and ran > 0.002:
+                        continue
+                    if math.exp(-abs(note-ans[-2])) < 0.8*ran:
+                        continue
+                ans.append(note)
+                break
     return ans
 
 
