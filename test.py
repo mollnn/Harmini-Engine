@@ -31,14 +31,14 @@ def generatorNaive(harmony_proceed, num_note_in_chord):
                     note -= 12
                 if len(ans) > 0:
                     ran = random.random()
-                    if abs(note-ans[-1]) == 0 and ran > 0.001:
+                    if abs(note-ans[-1]) == 0 and ran > 0.0003:
                         continue
                     ran = random.random()
                     if math.pow(2, -abs(note-ans[-1])) < ran:
                         continue
                 if len(ans) > 1:
                     ran = random.random()
-                    if abs(note-ans[-2]) == 0 and ran > 0.01:
+                    if abs(note-ans[-2]) == 0 and ran > 0.003:
                         continue
                     ran = random.random()
                     if math.pow(1.2, -abs(note-ans[-2])) < 0.8*ran:
@@ -53,7 +53,7 @@ def playNoteSeries(note_series, bpm=120):
     tim = 0
     for i in note_series:
         audio_engine.put_sequence_to_buffer(
-            "instrument/piano_gcd/%03d.wav" % i, tim*44100)
+            "instrument/piano_gcd/%03d.wav" % i, tim*44100, weight=0.3)
         tim += 60/bpm
         print("time=", tim)
     audio_engine.play_buffer()

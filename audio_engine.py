@@ -23,16 +23,16 @@ def read_wave_data(file_path):
     return wave_data
 
 
-def put_sequence(filename, buf, position):
+def put_sequence(filename, buf, position, weight=1.0):
     position=int(position)
     clip = read_wave_data(filename)
     for i in range(len(clip[0])):
-        buf[0][position+i] += clip[0][i]
-        buf[1][position+i] += clip[1][i]
+        buf[0][position+i] += clip[0][i]*weight
+        buf[1][position+i] += clip[1][i]*weight
 
 
-def put_sequence_to_buffer(filename, position):
-    put_sequence(filename, buffer, position)
+def put_sequence_to_buffer(filename, position, weight=1.0):
+    put_sequence(filename, buffer, position, weight=weight)
 
 # def read(filename):
 #     chunk = 1
