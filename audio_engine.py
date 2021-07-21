@@ -18,5 +18,5 @@ def playMusic(music_desc):
         power = note_dec["power"]
         src_audio = readAudio(srcname, "wav")
         buf = buf.overlay(
-            src_audio[start:start+duration]+power, position=offset)
+            src_audio[start:start+duration].fade_out(300)+power, position=offset)
     playback.play(buf)
