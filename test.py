@@ -49,14 +49,21 @@ def generatorNaive(harmony_proceed, num_note_in_chord):
 
 
 def playNoteSeries(note_series, bpm=120):
-    print("start")
+    # Generate Music Description
+    # [{srcname, start, duration, offset},{},{},...]
+    music_desc = []
     tim = 0
-    for i in note_series:
-        audio_engine.put_sequence_to_buffer(
-            "instrument/piano_gcd/%03d.wav" % i, tim*44100, weight=0.3)
-        tim += 60/bpm
-        print("time=", tim)
-    audio_engine.play_buffer()
+    for note in note_series:
+        note_desc = {}
+        note_desc["srcname"] = "instrument/piano_gcd/%03d.wav" % note
+        note_desc["start"] = 0
+        note_desc["duration"] = 1000
+        note_desc["offset"] = tim
+        note_desc["power"] = -5
+        music_desc.append(note_desc)
+        tim += 60000/bpm
+    print("start")
+    audio_engine.playMusic(music_desc)
 
 
 if __name__ == "__main__":
