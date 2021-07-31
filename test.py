@@ -55,9 +55,9 @@ def playNoteSeries(note_series, bpm=120):
     tim = 0
     for note in note_series:
         note_desc = {}
-        note_desc["srcname"] = "instrument/piano_gcd/%03d.wav" % note
+        note_desc["srcname"] = "instrument/guitar_agt_v1/%03d.wav" % note
         note_desc["start"] = 0
-        note_desc["duration"] = 1000
+        note_desc["duration"] = 60000/bpm+200
         note_desc["offset"] = tim
         note_desc["power"] = -5
         music_desc.append(note_desc)
@@ -70,4 +70,4 @@ if __name__ == "__main__":
     harmony_proceed = ['C4M', 'G4M', 'A5m', 'E4m', 'F4M', 'C4M', 'F4M',
                        'G4M', 'F4M', 'G4M', 'E4m', 'A5m', 'D4m', 'G4M', 'C4M', 'C4M']
     note_series = generatorNaive(harmony_proceed, 4)
-    playNoteSeries(note_series, 240)
+    playNoteSeries(note_series, 160)
